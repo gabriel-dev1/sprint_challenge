@@ -51,13 +51,13 @@ df = carregar_mock(MOCK_PATH)
 # Modelo de dados esperado
 class Dados(BaseModel):
     energia: str
-    equipamento: int
+    equi: int
 
 # Rota para receber dados do Streamlit
 @app.post("/enviar")
 def receber_dados(dados: Dados):
-    print(f"Recebido: {dados.equipamento}, {dados.energia}")
-    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.equipamento}"}
+    print(f"Recebido: {dados.equi}, {dados.energia}")
+    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.equi}"}
 
 @app.get("/dados-energia")
 def get_dados_energia():
