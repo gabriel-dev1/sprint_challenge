@@ -87,8 +87,11 @@ else:
     with st.expander("Ver tabela de dados"):
         st.dataframe(df_sel, use_container_width=True, hide_index=True)
 
+equi: str = f"{res.get("equipamento")}"
+energia: float = kwh(res.get("energia_dia", 0.0))
+
 if st.button("Enviar dados"):
-    payload = {"equipamento": col4, "energia": col1}
+    payload = {"equipamento": equi, "energia": energia}
     try:
         resposta = requests.post("https://sprint-challenge.onrender.com/enviar", json=payload)
         if resposta.status_code == 200:
