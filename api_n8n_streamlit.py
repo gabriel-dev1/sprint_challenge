@@ -71,7 +71,7 @@ def get_dados_energia():
 # Modelo de dados esperado
 class Dados(BaseModel):
     energia_total: str
-    inverter_sn: int
+    inverter_sn: float
 
 # Rota para receber dados do Streamlit
 @app.post("/dados-energia")
