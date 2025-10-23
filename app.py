@@ -99,7 +99,7 @@ if st.button("Enviar dados"):
     #payload = {"plant_id": plant_id, "inverter_sn": equi, "date": date_i, "energia_total": energia, "soc_ini": soc_ini, "pico_potencia": pico, "data": data}
     payload = {"inverter_sn": equi, "energia_total": energia}
     try:
-        resposta = requests.post("https://sprint-challenge.onrender.com/enviar", json=payload)
+        resposta = requests.post("https://sprint-challenge.onrender.com/dados-energia", json=payload)
         if resposta.status_code == 200:
             st.success("✅ Dados enviados com sucesso!")
             st.json(resposta.json())
