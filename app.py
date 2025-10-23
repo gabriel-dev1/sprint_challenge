@@ -88,7 +88,7 @@ else:
         st.dataframe(df_sel, use_container_width=True, hide_index=True)
 
 if st.button("Enviar dados"):
-    payload = {"equipamento": df[col4].values, "energia": df[col1].values}
+    payload = {"equipamento": col4, "energia": col1}
     try:
         resposta = requests.post("https://sprint-challenge.onrender.com/enviar", json=payload)
         if resposta.status_code == 200:
