@@ -77,7 +77,7 @@ class Dados(BaseModel):
 @app.post("/dados-energia")
 def receber_dados(dados: Dados):
     print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
-    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.equi}"}
+    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
