@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
 import uvicorn
@@ -68,10 +69,23 @@ def get_dados_energia():
     }
     return payload '''
 
+@app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Em produção, especifique os domínios permitidos
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 # Modelo de dados esperado
 class Dados(BaseModel):
     energia_total: float
     inverter_sn: str
+
+@app.get("/")
+def root():
+    return {"status": "API funcionando"}
 
 # Rota para receber dados do Streamlit
 @app.post("/enviar")
