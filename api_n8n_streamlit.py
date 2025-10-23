@@ -69,15 +69,6 @@ def get_dados_energia():
     }
     return payload '''
 
-@app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Em produção, especifique os domínios permitidos
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
 # Modelo de dados esperado
 class Dados(BaseModel):
     energia_total: float
