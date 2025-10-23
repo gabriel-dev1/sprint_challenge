@@ -4,6 +4,7 @@ from datetime import date
 
 import pandas as pd
 import plotly.express as px
+import requests
 import streamlit as st
 
 # -------------------- Configuração --------------------
@@ -35,12 +36,14 @@ def resumo_dia(df: pd.DataFrame) -> dict:
     energia_dia = float(df["Eday"].dropna().iloc[-1]) if "Eday" in df.columns else 0.0
     soc_ini = int(df["Cbattery1"].dropna().iloc[0]) if "Cbattery1" in df.columns else 0
     soc_fim = int(df["Cbattery1"].dropna().iloc[-1]) if "Cbattery1" in df.columns else 0
+    equi = f"{df.attrs["meta"]["inverter_sn"]}"
     pico = float(df["Pac"].max()) if "Pac" in df.columns else 0.0
     return {
         "energia_dia": energia_dia,
         "soc_ini": soc_ini,
         "soc_fim": soc_fim,
-        "pico_potencia": pico
+        "pico_potencia": pico,
+        "equipamento": equi
     }
 
 def kwh(x: float) -> str:
@@ -63,10 +66,11 @@ else:
 
     # KPIs
     res = resumo_dia(df_sel)
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(3)
     col1.metric("Energia do dia", kwh(res.get("energia_dia", 0.0)))
     col2.metric("SOC inicial → final", f"{res.get('soc_ini',0)}% → {res.get('soc_fim',0)}%")
     col3.metric("Pico de energia", kw(res.get("pico_potencia",0.0)))
+    col4.metric("Inversor", f"{res.get("equipamento")}")
 
     # Gráficos
     left, right = st.columns(2)
@@ -82,3 +86,15 @@ else:
     # Tabela
     with st.expander("Ver tabela de dados"):
         st.dataframe(df_sel, use_container_width=True, hide_index=True)
+
+if st.button("Enviar dados"):
+    payload = {"equipamento": df[col4].values, "energia": df[col1].values}
+    try:
+        resposta = requests.post("https://sprint-challenge.onrender.com/enviar", json=payload)
+        if resposta.status_code == 200:
+            st.success("✅ Dados enviados com sucesso!")
+            st.json(resposta.json())
+        else:
+            st.error(f"Erro: {resposta.status_code}")
+    except Exception as e:
+        st.error(f"Falha na conexão: {e}")

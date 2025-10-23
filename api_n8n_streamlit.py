@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 from fastapi import FastAPI
+from pydantic import BaseModel
 import pandas as pd
 import uvicorn
 
@@ -46,6 +47,17 @@ def resumo_dia(df: pd.DataFrame) -> dict:
 # -------------------- FastAPI --------------------
 app = FastAPI()
 df = carregar_mock(MOCK_PATH)
+
+# Modelo de dados esperado
+class Dados(BaseModel):
+    energia: str
+    equipamento: int
+
+# Rota para receber dados do Streamlit
+@app.post("/enviar")
+def receber_dados(dados: Dados):
+    print(f"Recebido: {dados.equipamento}, {dados.energia}")
+    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.equipamento}"}
 
 @app.get("/dados-energia")
 def get_dados_energia():
