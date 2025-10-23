@@ -74,7 +74,7 @@ class Dados(BaseModel):
     inverter_sn: str
 
 # Rota para receber dados do Streamlit
-@app.post("/dados-energia")
+@app.post("/enviar")
 def receber_dados(dados: Dados):
     print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
     return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
