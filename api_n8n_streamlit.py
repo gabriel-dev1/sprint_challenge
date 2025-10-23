@@ -74,6 +74,13 @@ class Dados(BaseModel):
     energia_total: float
     inverter_sn: str
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ou coloque o domínio do Streamlit
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 def root():
     return {"status": "API funcionando"}
