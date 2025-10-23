@@ -48,18 +48,8 @@ def resumo_dia(df: pd.DataFrame) -> dict:
 app = FastAPI()
 df = carregar_mock(MOCK_PATH)
 
-# Modelo de dados esperado
-class Dados(BaseModel):
-    energia: str
-    equi: int
 
-# Rota para receber dados do Streamlit
-@app.post("/enviar")
-def receber_dados(dados: Dados):
-    print(f"Recebido: {dados.equi}, {dados.energia}")
-    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.equi}"}
-
-@app.get("/dados-energia")
+'''@app.get("/dados-energia")
 def get_dados_energia():
     if df.empty:
         return {"error": "Nenhum dado disponível"}
@@ -76,7 +66,18 @@ def get_dados_energia():
         "pico_potencia": float(resumo.get("pico_potencia", 0.0)),
         "data": df_envio.to_dict(orient="records")
     }
-    return payload
+    return payload '''
+
+# Modelo de dados esperado
+class Dados(BaseModel):
+    energia_total: str
+    inverter_sn: int
+
+# Rota para receber dados do Streamlit
+@app.post("/dados-energia")
+def receber_dados(dados: Dados):
+    print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
+    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.equi}"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
