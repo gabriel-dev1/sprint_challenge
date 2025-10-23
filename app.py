@@ -97,7 +97,7 @@ data: list[dict] = [{"time":"2025-08-12T09:00:00","Pac":0.85,"Eday":0.85,"Cbatte
 
 if st.button("Enviar dados"):
     #payload = {"plant_id": plant_id, "inverter_sn": equi, "date": date_i, "energia_total": energia, "soc_ini": soc_ini, "pico_potencia": pico, "data": data}
-    payload = {"energia_total": energia_total, "inverter_sn": inverter_sn}
+    payload = {"energia_total": float(energia_total), "inverter_sn": str(inverter_sn)}
     try:
         resposta = requests.post("https://sprint-challenge.onrender.com/dados-energia", json=payload)
         if resposta.status_code == 200:
