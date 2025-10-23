@@ -66,7 +66,7 @@ else:
 
     # KPIs
     res = resumo_dia(df_sel)
-    col1, col2, col3, col4 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     col1.metric("Energia do dia", kwh(res.get("energia_dia", 0.0)))
     col2.metric("SOC inicial → final", f"{res.get('soc_ini',0)}% → {res.get('soc_fim',0)}%")
     col3.metric("Pico de energia", kw(res.get("pico_potencia",0.0)))
