@@ -89,7 +89,12 @@ def root():
 @app.post("/enviar/")
 def receber_dados(dados: Dados):
     print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
-    return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
+    payload = {
+        "energia_total": dados.energia_total,
+        "inverter_sn": dados.inverter_sn
+    }
+    return payload
+    #return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
