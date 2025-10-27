@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from datetime import datetime
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
@@ -89,16 +89,13 @@ def root():
     return {"status": "API funcionando"}
 
 # Rota para receber dados do Streamlit
-@app.post("/enviar/")
-def receber_dados(dados: Dados):
-    print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
-    
-    payload = {
-        "energia_total": dados.energia_total,
-        "inverter_sn": dados.inverter_sn
-    }
-    return payload
+@app.api_route("/enviar/", methods = ["GET", "POST"])
+async def receber_dados(request: Request): # dados: Dados
+    if request.method == "POST":
+        dados = await request.json()
+        print(f"Recebido: {dados.get('inverter_sn')}, {dados.get('energia_total')}")
+        return dados
     #return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
-
+    return {"status": "ok", "mensagem": "Use POST para enviar dados"}
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
