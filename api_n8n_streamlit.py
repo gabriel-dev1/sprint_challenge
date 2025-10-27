@@ -91,7 +91,7 @@ def root():
 # Rota para receber dados do Streamlit
 @app.post("/enviar/")
 async def receber_dados(dados: Dados): # dados: Dados request: Request
-    print(f"Recebido: {dados.get('inverter_sn')}, {dados.get('energia_total')}")
+    print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
     return {
         "status": "ok",
         "mensagem": "Dados recebidos com sucesso",
@@ -101,4 +101,5 @@ async def receber_dados(dados: Dados): # dados: Dados request: Request
     #return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
+
 
