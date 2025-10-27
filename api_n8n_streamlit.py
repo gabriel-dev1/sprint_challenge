@@ -89,7 +89,7 @@ def root():
     return {"status": "API funcionando"}
 
 # Rota para receber dados do Streamlit
-@app.post("/enviar/")
+@app.get("/enviar/")
 def receber_dados(dados: Dados):
     print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
     
