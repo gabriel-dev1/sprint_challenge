@@ -90,7 +90,7 @@ else:
 plant_id: str = "PLANT_DEMO_001"
 inverter_sn: str = f"{res.get("equipamento")}"
 date_i: str = "2025-08-12"
-energia_total: float = res.get("energia_dia", 0.0)
+energia_total: float = res.get("energia_dia", 0.0) + 2
 soc_ini: int = 64
 pico: float = 4.7
 data: list[dict] = [{"time":"2025-08-12T09:00:00","Pac":0.85,"Eday":0.85,"Cbattery1":64},{"time":"2025-08-12T10:00:00","Pac":1.5,"Eday":2.03,"Cbattery1":66},{"time":"2025-08-12T11:00:00","Pac":2.22,"Eday":3.89,"Cbattery1":68},{"time":"2025-08-12T12:00:00","Pac":2.69,"Eday":6.34,"Cbattery1":70},{"time":"2025-08-12T13:00:00","Pac":2.83,"Eday":9.1,"Cbattery1":72},{"time":"2025-08-12T14:00:00","Pac":3.02,"Eday":12.03,"Cbattery1":74},{"time":"2025-08-12T15:00:00","Pac":3.64,"Eday":15.35,"Cbattery1":76},{"time":"2025-08-12T16:00:00","Pac":4.44,"Eday":19.39,"Cbattery1":78},{"time":"2025-08-12T17:00:00","Pac":4.7,"Eday":23.97,"Cbattery1":80},{"time":"2025-08-12T18:00:00","Pac":4.07,"Eday":28.35,"Cbattery1":82},{"time":"2025-08-12T19:00:00","Pac":2.97,"Eday":31.87,"Cbattery1":84},{"time":"2025-08-12T20:00:00","Pac":2.09,"Eday":34.4,"Cbattery1":86},{"time":"2025-08-12T21:00:00","Pac":1.65,"Eday":36.27,"Cbattery1":88}]
