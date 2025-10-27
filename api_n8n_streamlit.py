@@ -71,8 +71,8 @@ def get_dados_energia():
 
 # Modelo de dados esperado
 class Dados(BaseModel):
-    energia_total: float
-    inverter_sn: str
+    energia_total: float = float(resumo.get("energia_dia", 0.0))
+    inverter_sn: str = str(df.attrs["meta"].get("inverter_sn", ""))
 
 app.add_middleware(
     CORSMiddleware,
