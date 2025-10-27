@@ -69,6 +69,9 @@ def get_dados_energia():
     }
     return payload '''
 
+df_envio = df.copy()
+resumo = resumo_dia(df_envio)
+
 # Modelo de dados esperado
 class Dados(BaseModel):
     energia_total: float = float(resumo.get("energia_dia", 0.0))
@@ -89,6 +92,7 @@ def root():
 @app.post("/enviar/")
 def receber_dados(dados: Dados):
     print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
+    
     payload = {
         "energia_total": dados.energia_total,
         "inverter_sn": dados.inverter_sn
