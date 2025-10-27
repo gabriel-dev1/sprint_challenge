@@ -103,6 +103,7 @@ async def receber_dados(dados: Dados): # dados: Dados request: Request
         "energia_total": dados.energia_total
     }
 
+@app.get("/enviar/")
 def mostrar_dados():
     return dados_recebidos
 
