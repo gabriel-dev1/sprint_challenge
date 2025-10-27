@@ -88,18 +88,23 @@ app.add_middleware(
 def root():
     return {"status": "API funcionando"}
 
+dados_recebidos = []
+
 # Rota para receber dados do Streamlit
 @app.post("/enviar/")
 async def receber_dados(dados: Dados): # dados: Dados request: Request
     print(f"Recebido: {dados.inverter_sn}, {dados.energia_total}")
+    dados_recebidos.append(dados)
+    #return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
     return {
         "status": "ok",
         "mensagem": "Dados recebidos com sucesso",
         "inverter_sn": dados.inverter_sn,
         "energia_total": dados.energia_total
     }
-    #return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
+
+def mostrar_dados():
+    return dados_recebidos
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
-
-
