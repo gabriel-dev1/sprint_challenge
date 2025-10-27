@@ -89,13 +89,16 @@ def root():
     return {"status": "API funcionando"}
 
 # Rota para receber dados do Streamlit
-@app.api_route("/enviar/", methods = ["GET", "POST"])
-async def receber_dados(request: Request): # dados: Dados
-    if request.method == "POST":
-        dados = await request.json()
-        print(f"Recebido: {dados.get('inverter_sn')}, {dados.get('energia_total')}")
-        return dados
+@app.post("/enviar/")
+async def receber_dados(dados: Dados): # dados: Dados request: Request
+    print(f"Recebido: {dados.get('inverter_sn')}, {dados.get('energia_total')}")
+    return {
+        "status": "ok",
+        "mensagem": "Dados recebidos com sucesso",
+        "inverter_sn": dados.inverter_sn,
+        "energia_total": dados.energia_total
+    }
     #return {"status": "ok", "mensagem": f"Dados recebidos de {dados.inverter_sn}"}
-    return {"status": "ok", "mensagem": "Use POST para enviar dados"}
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
+
